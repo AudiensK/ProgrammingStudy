@@ -39,7 +39,7 @@ int main(int argc, char const *argv[])
     dst必须有足够空间
 
     复制一个字符串
-    char *a = (char*)malloc(strlen(src) + 1);  // 注意别忘记+1
+    char *a = (char*)malloc(strlen(src) + 1);  // 注意别忘记+1，因为strlen得到的结果不包含'\0'
     strcpy(dst, src);
     */
     
