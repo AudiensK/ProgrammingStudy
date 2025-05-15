@@ -1,0 +1,5 @@
+# Windows
+*.exe
+
+#VSCode
+.vscode
