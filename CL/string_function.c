@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>  // 符串处理函数需要包含string.h头文件
+#include <stdlib.h>
 
 int main(int argc, char const *argv[])
 {
@@ -41,6 +42,7 @@ int main(int argc, char const *argv[])
     复制一个字符串
     char *a = (char*)malloc(strlen(src) + 1);  // 注意别忘记+1，因为strlen得到的结果不包含'\0'
     strcpy(dst, src);
+    free(a)
     */
     
     /*
@@ -57,6 +59,35 @@ int main(int argc, char const *argv[])
     // char *strncat(char *restrict s1, const char *restrict s2, size-t n);
     
     // int strncmp(const char *s1, const char *s2, size-t n);  // 比较前n个字符
+
+    /* 字符串中找字符
+    char* strchr(const char*s, int c);  // 从左往右
+    char* strrchr(const char*s, int c);  // 从右往左
+    返回的是指针，返回NULL表示没找到
+    */
+    char h[] = {"Hello"};
+    char *p = strchr(h, 'l');
+    //char *p = strrchr(h, 'l');
+    p = strchr(p+1, 'l');
+    printf("*p=%c\n", *p);
+    printf("p=%p\n", p);
+    printf("p=%s\n", p);
+    char *t = (char*)malloc(strlen(p) + 1);
+    strcpy(t, p);
+    printf("t=%s\n", t);
+    int c = *p;
+    *p = '\0';
+    char *t1 = (char*)malloc(strlen(h));
+    strcpy(t1, h);
+    *p = c;
+    printf("%s\n", t1);
+    free(t);
+    free(t1);
+
+    /* 字符串中找字符串
+    char* strstr(const char *s1, const char *s2);  
+    char* strcasestr(const char *s1, const char *s2);  // 忽略大小写
+    */
 
     return 0;
 }
