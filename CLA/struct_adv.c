@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 
 // 和本地变量一样，在函数内部声明的结构类型只能在该函数内部使用，所以通常在外部声明结构类型
@@ -38,6 +39,13 @@ struct date {  // 声明一个结构类型
 struct date *pDate = &today;  
 */
 
+// 结构可以作为参数的值传入函数
+// 这时候是在函数内新建一个结构变量，并复制调用者的结构的值
+// 也可以返回一个结构
+bool isLeap(struct date y);
+struct date tomorrow(struct date d);
+
+
 int main()
 {
     struct date goneday;  // 声明一个date结构类型的变量today
@@ -46,7 +54,7 @@ int main()
 
     goneday.month = 12;  // 结构变量名.成员名 来访问结构成员； 点.也是一种运算符号
     goneday.day = 25;
-    goneday.year = 1999;
+    goneday.year = 1996;
 
     today = goneday;  // 可以直接赋值
     today.day = 31;
@@ -57,6 +65,48 @@ int main()
     printf("%d年%d月%d日\n", today.year, today.month, today.day);
     printf("%d年%d月%d日\n", todayzero.year, todayzero.month, todayzero.day);
     printf("pDate=%p\n", pDate);
+    printf("\n");
+
+    struct date d;
+    printf("Enter today's date:(mm dd yy)\n");
+    scanf("%d %d %d", &d.month, &d.day, &d.year);  // 可以看出运算符.优先级更高
+    struct date t = tomorrow(d);
+    printf("Tomorrow is %d-%d-%d\n", t.month, t.day, t.year);
 
     return 0;
+}
+
+
+struct date tomorrow(struct date d)
+{
+    int lastdayofamonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    if (isLeap(d)) {
+        lastdayofamonth[1] = 29;
+    }
+
+    if (d.day == lastdayofamonth[d.month - 1]) {
+        d.day = 1;
+        d.month++;
+    } else {
+        d.day++;
+    }
+
+    if (d.month > 12) {
+        d.month = 1;
+        d.year++;
+    }
+
+    return d;
+}
+
+
+bool isLeap(struct date y)
+{
+    bool leapyear = false;
+    if ( (y.year % 100 != 0 && y.year % 4 == 0) || y.year % 400 == 0) {
+        leapyear = true;
+    }
+
+    return leapyear;
 }
