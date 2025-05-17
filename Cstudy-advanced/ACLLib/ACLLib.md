@@ -1,0 +1,6 @@
+ACLLib是一个纯教学用途的纯C语言图形库，它并非任何产业界在使用的图形库，也不会有机会发展成为流行的图形库。
+它只是我们为了C语言学习的目的自己开发的非常简单的图形库。它基于MS Windows的Win32API，所以在所有的Windows版本上都能使用。
+但是也因此它无法做成跨平台的库在其他操作系统上使用。
+附件是ACLLib的全部文件，包括源代码和文档及例子程序。
+使用Windows下的多种IDE都可以使用ACLLib，包括但不限于DevC++、MS Visual Studio、CodeBlocks等，也可以直接由MinGW编译器以Makefile方式编译。
+ACLLib在github上开源，网址是：https://github.com/wengkai/ACLLib ，你可以从这个网址下载ACLLib，也欢迎你对ACLLib提出修改和改进。
