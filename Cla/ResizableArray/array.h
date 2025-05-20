@@ -12,5 +12,6 @@ int array_size(Array *parr);
 int* array_at(Array *parr, int index);
 void array_inflate(Array *parr, int more_size);
 
+void array_print(const Array *arr);
 
 #endif

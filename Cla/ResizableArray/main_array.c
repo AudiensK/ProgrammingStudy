@@ -20,6 +20,10 @@ int main()
         }
         // scanf("%d", array_at(&arr1, cnt++));  // array_at()返回的是指针，所以不需要&寻址
     }
+    // 输出数组
+    printf("%d\n", array_size(&arr1));
+    array_print(&arr1);
+    
     // 释放内存
     array_free(&arr1);
 

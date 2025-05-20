@@ -98,3 +98,10 @@ void array_inflate(Array *parr, int more_size)
     //     parr->size += more_size;
     // }
 }
+
+void array_print(const Array *arr)
+{
+    for (int i =0; i < arr->size; i++) {
+        printf("%d ", arr->array[i]);
+    }
+}
