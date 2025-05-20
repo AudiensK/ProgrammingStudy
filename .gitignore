@@ -1,0 +1,8 @@
+# Windows
+*.exe
+
+#VSCode
+.vscode
+
+#Clang
+.o
