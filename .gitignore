@@ -5,4 +5,6 @@
 .vscode
 
 #Clang
+*.i
+*.s
 *.o
