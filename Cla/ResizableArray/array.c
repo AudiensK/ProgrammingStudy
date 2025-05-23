@@ -1,5 +1,8 @@
 // 创建一个操作可变大小的数组的函数库
 #include "array.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 // 创建Array类型的数组结构的函数
