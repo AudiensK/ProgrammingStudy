@@ -7,7 +7,8 @@
 /*如果输入数据时，先告诉你个数，然后再输入，要记录每个数据
 c99可以用变量做数组定义的大小，
 c99之前：
-int *a = (int*)malloc(n*sizeof(int));
+int *a;
+a = (int*)malloc(n*sizeof(int));
   malloc(需要的内存空间所占用的字节大小)，分配好空间后再用(type*)类型转换为type类型的指针，再赋值给一个指针变量
 */
 
@@ -73,7 +74,7 @@ free过后再次free
 int main()
 {
     int number;
-    int *a;  // c99之前先要定义个指针
+    int *a;  // c99之前先要声明个指针，c99后可以 int *a = (int*)malloc(number * sizeof(int));
     int i;
     printf("输入数量：\n");
     scanf("%d", &number);
