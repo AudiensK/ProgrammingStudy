@@ -1,5 +1,36 @@
 #include <stdio.h>
 
+
+// 声明函数原型
+int plus(int a, int b, Callback call);
+int callback(int a, int b);
+
+
+// 可用于定义回调函数类型
+typedef int (*Callback)(int a, int b);  // 定义一个名为Callback的函数指针类型，返回值int,参数int a, int b
+
+// 可用于定义枚举类型，能简化
+typedef enum {
+    NO_EVENT = 0,
+    LEFT_BUTTON_DOWN,
+    LEFT_BUTTON_RELEASE,
+    RIGHT_BUTTON,
+    RIGHT_BUTTON_RELEASE,
+} MOUSEEVENT;
+
+MOUSEEVENT event1 = LEFT_BUTTON_DOWN;  // 不需要enum关键字，能够直接用类型名声明变量
+
+// enum MOUSEEVENT {
+//     NO_EVENT = 0,
+//     LEFT_BUTTON_DOWN,
+//     LEFT_BUTTON_RELEASE,
+//     RIGHT_BUTTON,
+//     RIGHT_BUTTON_RELEASE,
+// };
+
+// enum MOUSTEEVEN event1 = LEFT_BUTTON_DOWN;  // 不适用typedef，声明枚举变量需要带上enum关键字
+
+
 int main()
 {
     // 自定义数据类型（typedef）
@@ -28,7 +59,7 @@ int main()
     typedef struct a_point APoint;  // 也可以先声明一个结构，再typedef声明这个新类型的名字
     struct a_point as = {2, 3};
     Point bs = {1, 2};  // 可以简化声明结构变量的语句
-    APoint cs = {};
+    APoint cs = {3, 4};
 
     // typedef 字符串数组
     typedef char* String[10];  // String是10个字符串的数组的类型
@@ -39,5 +70,25 @@ int main()
     char str1[10] = "string";
     char *str2 = "string";
 
+
+    //回调函数
+    int a=1,b=2;
+    printf("a+b=%d\n", plus(a, b, callback));
+
     return 0;
+}
+
+
+int plus(int a, int b, Callback call)
+{
+    // 运行一些程序
+    printf("do something...\n");
+    // 满足条件后回调函数
+    return call(a, b);
+}
+
+
+int callback(int a, int b)
+{
+    return a + b;
 }
