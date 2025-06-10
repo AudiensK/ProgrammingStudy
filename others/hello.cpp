@@ -1,8 +1,11 @@
 #include <iostream>
-using namespace std;
+// using namespace std;
 
 int main()
 {
-    cout<<"Hello World!  ²âÊÔ"<<endl;
+    std::cout << "Hello World!" << std::endl;
+
+    std::cin.get();
+    
     return 0;
 }
