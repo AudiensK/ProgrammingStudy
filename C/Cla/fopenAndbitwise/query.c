@@ -34,11 +34,11 @@ QUERY:
         printAll(filename); 
     } else if (n == 2) {
         read(filename);
-    } else {
-        goto QUERY;
-    } 
+    }
+    
+    goto QUERY;
 
-    return 0;
+    // return 0;
 }
 
 int read(const char* filename)
@@ -143,4 +143,3 @@ int printAll(const char* filename)
 
     return ret == number;
 }
-
