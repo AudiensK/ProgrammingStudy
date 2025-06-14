@@ -26,13 +26,21 @@ int main()
 
     常见错误
     char *string;  // 该指针还未初始化
-    scanf("%s", string);  
+    scanf("%s", &string);  
     //char* string不是字符串变量，即使初始化指向一个字符串，也无法直接输入
 
     空字符串
     char buffer[100] = "";  //这是一个空字符串，buffer[0] = '/0'
     char buffer[] = "";  //这个数组长度只有1
     */
+
+    // char *string;  // string 是一个未初始化的野指针，它指向随机内存地址（可能是非法区域）。
+    // scanf("%s", string);  // 编译和运行虽然没报错，但是有严重安全隐患，应该避免这种写法
+    // printf("string is %s;sizeof(string)=%d\n", string, sizeof(*string));
+
+    char buffer1[100] = "";
+    char buffer2[] = "";
+    printf("buffer1 is %s, buffer1 is %s\n", buffer1, buffer2);
 
     return 0;
 }

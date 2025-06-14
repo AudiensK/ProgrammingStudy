@@ -114,7 +114,14 @@ World!\n");  // 用反斜杠\表示连接下一行
     printf("&c2=%p\n", &c2);
     // 并没有产生新的字符串，只是让c2指向c1所指的字符串
     c2 = c1;
-    printf("c1=%p\nc2=%p", c1, c2);    
+    printf("c1=%p\nc2=%p\n", c1, c2); 
+    printf("\n"); 
+
+    //
+    char string[] = "Hello";
+    i = 0;
+    printf("string[i] = %c\n", *(string + i));  // *(string + i)相当于string[i]
+    printf("string[i] = %c\n", string[i]);
 
     return 0;
 }
