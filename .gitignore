@@ -4,6 +4,9 @@
 #VSCode
 .vscode
 
+#VS
+.vs
+
 #Clang
 *.i
 *.s
