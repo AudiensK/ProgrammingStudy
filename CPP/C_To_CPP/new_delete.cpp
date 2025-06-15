@@ -6,16 +6,22 @@
 using std::cout, std::cin, std::endl;
 
 class Person {
-
+    public:
+    void print(void) {
+        std::cout << "Person" << std::endl;
+    }
 };
 
 int main()
 {
     // new操作符的作用是在堆上动态地分配内存，并且会自动调用对象的构造函数。
 
-    // 申请单个内存
+    // 为单个对象分配内存
     int* ptr1 = new int;  // 分配一个int类型大小的内存空间
     *ptr1 = 0;
+    Person* p = new Person();  // 分配一个Person对象的内存空间，并调用默认构造函数
+    (*p).print();
+    p->print();
 
     // 申请单个内存并初始化
     int* ptr2 = new int(123);  // 分配一个int类型大小的内存空间，并初始化为123
@@ -48,10 +54,18 @@ int main()
     ptr2 = nullptr;  // 空置释放后的指针
     delete ptr2;  // 再次delete该指针就不会报错
 
+    delete p;
+    p = nullptr;
+
+    // 定位 new（Placement New）,允许你在已经分配好的内存上构造对象。
+    void* buffer = malloc(sizeof(Person));  // 用malloc分配一块原始内存
+    Person* p2 = new(buffer) Person();        // 在buffer这块内存上构造Person对象
+    p2->~Person();       // 显式调用析构函数，销毁对象
+    free(buffer);       // 释放malloc分配的内存
+
     // 释放连续内存
     delete[] arr;  // 释放arr所指向的int数组的内存
-    delete[] str;  // 释放str所指向的字符数组的内存
-    
+    delete[] str;  // 释放str所指向的字符数组的内存    
 
     cin.get();
     return 0;

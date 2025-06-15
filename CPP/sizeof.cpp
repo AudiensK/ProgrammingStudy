@@ -2,6 +2,7 @@
 
 int main()
 {
+    // sizeof是一种运算符
     std::cout << "sizeof(char)=" << sizeof(char) << " Byte" << std::endl;
     std::cout << "sizeof(wchar_t)=" << sizeof(wchar_t) << " Byte" << std::endl;
 
