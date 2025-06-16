@@ -10,9 +10,11 @@ struct Student {
 
 int main() {
     // 声明一个学生结构体变量
-    struct Student s1;
+    struct Student s1;  // 未初始化，内部为随机数据
     // 声明一个学生结构体变量并初始化
-    struct Student s2 = {.name = {"Jack"}, .age = 18};
+    struct Student s2 = {.name = "Jack", .age = 18};
+    struct Student s3 = {"Jab", 17, 99.9};
+    struct Student s4 = {};  // 初始化为0
 
     // 初始化结构体变量
     strcpy(s1.name, "John");
@@ -28,6 +30,16 @@ int main() {
     printf("Name: %s\n", s2.name);
     printf("Age: %d\n", s2.age);
     printf("Score: %.2f\n", s2.score);
+
+    printf("\n");
+    printf("Name: %s\n", s3.name);
+    printf("Age: %d\n", s3.age);
+    printf("Score: %.2f\n", s3.score);
+
+    printf("\n");
+    printf("Name: %s\n", s4.name);
+    printf("Age: %d\n", s4.age);
+    printf("Score: %lf\n", s4.score);
 
     return 0;
 }
