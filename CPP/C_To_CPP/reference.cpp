@@ -29,10 +29,10 @@ int main()
     addone(number);
     std::cout << num << std::endl;
 
-    addtwo(number);
+    addtwo(number);  // 引用参数允许函数修改实参
     std::cout << num << std::endl;
 
-    addthree(&number);  // 引用参数允许函数修改实参
+    addthree(&number);  // 传入指针
     std::cout << num << std::endl;
 
     // 引用必须始终指向一个有效的对象，不能指向 nullptr。

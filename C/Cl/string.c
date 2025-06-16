@@ -107,10 +107,10 @@ World!\n");  // 用反斜杠\表示连接下一行
     char*不一定是字符串，本意是指向字符的指针，可能是指向字符的数组（如int*），只有它指向的数组结尾是0，才能说是字符串
     */
 
-    // 字符串赋值
+    // 字符串初始化
     char *c1 = "title";
     char *c2;
-    printf("c2=%p\n", c2);  // 未赋值前，指向了一个随机地址
+    printf("c2=%p\n", c2);  // 未初始化前，指向了一个随机地址
     printf("&c2=%p\n", &c2);
     // 并没有产生新的字符串，只是让c2指向c1所指的字符串
     c2 = c1;
@@ -122,6 +122,8 @@ World!\n");  // 用反斜杠\表示连接下一行
     i = 0;
     printf("string[i] = %c\n", *(string + i));  // *(string + i)相当于string[i]
     printf("string[i] = %c\n", string[i]);
+    // string = "World";  // 不能直接赋值
+    // 需要逐个单元赋值或使用strcpy()
 
     return 0;
 }
