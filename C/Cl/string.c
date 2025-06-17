@@ -34,7 +34,8 @@ int main()
     */
 
     // 字符串变量
-    char *str = "Hello";
+    const char *str = "Hello";  
+    // 字符指针指初始化最好加const，"Hello"为一个常量，如果没有const，用str对所指的常量修改会引发未定义行为
     char word[] = "Hello";
     char line[10] = "Hello";  // 5个字符，在数组中占据6个字节，因为最后还有个0
     //printf("*str=%s\n", *str);  // 运行会报错
@@ -42,7 +43,7 @@ int main()
     printf("*str=%c\n", *str);
     //printf("*str=%s\n", *str);  // 运行时报错
     printf("str=%s\n", str);
-    char *str1 = "H";  // str指向的时字符串
+    const char *str1 = "H";  // str指向的时字符串
     printf("str1(%%c)=%c\n", str1);  // %c与str1类型不匹配，导致未定义行为，输出结果错误，不同环境结果可能不同
 
     // 字符串常量（字面量）
@@ -71,9 +72,9 @@ World!\n");  // 用反斜杠\表示连接下一行
     如果需要修改字符串，应该用数组：
         char s[] = "Hello World!";
     */
-    char *s = "Hello World!";
+    const char *s = "Hello World!";
     //s[0] = 'B';  // 编译不会报错，但是运行时会出错
-    char *s2 = "Hello World!";
+    const char *s2 = "Hello World!";
     int i = 0;
     // s和s2指向同一个地址，且地址很大，位于程序的代码段，而且时只读
     printf("s=%p\n", s);
@@ -108,8 +109,8 @@ World!\n");  // 用反斜杠\表示连接下一行
     */
 
     // 字符串初始化
-    char *c1 = "title";
-    char *c2;
+    const char *c1 = "title";
+    const char *c2;
     printf("c2=%p\n", c2);  // 未初始化前，指向了一个随机地址
     printf("&c2=%p\n", &c2);
     // 并没有产生新的字符串，只是让c2指向c1所指的字符串

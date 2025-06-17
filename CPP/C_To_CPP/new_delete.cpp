@@ -35,6 +35,11 @@ int main()
         arr[i] = i;
         cout << "p3[" << i << "] = " << arr[i] << endl;
     }
+    // C++11以后可以使用列表初始化
+    int* arr1 = new int[10]();  // C++03及以后：值初始化为0
+    int* arr2 = new int[10]{1, 2, 3, 4, 5};  // C++11及以后, 结果：[1, 2, 3, 4, 5, 0, 0, 0, 0, 0]
+    char* str1 = new char[10]();
+    char* str2 = new char[10]{'a', 'b'};
 
     // *str = "Hello";  // *str 是解引用操作，它访问的是 str 指向的第一个字符（即内存地址 str 处的值）
     strncpy(str, "Hello", 19);  // 将"Hello"及其结束符'\0'复制到str指向的内存，最多复制19个字符
@@ -56,6 +61,12 @@ int main()
 
     delete p;
     p = nullptr;
+
+    delete arr1; arr1 = nullptr;
+    delete arr2; arr2 = nullptr;
+    delete str1; str1 = nullptr;
+    delete str2; str2 = nullptr;
+    
 
     // 定位 new（Placement New）,允许你在已经分配好的内存上构造对象。
     void* buffer = malloc(sizeof(Person));  // 用malloc分配一块原始内存

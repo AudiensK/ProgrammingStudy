@@ -86,11 +86,7 @@ public:
         cout << "id = " << id << ",ref = " << ref << ",a = " << a << endl;
     }
 
-    MyClass3(int& _ref) : id(9), ref(_ref), a(10) 
-    {
-        cout << "id = " << id << ",ref = " << ref << ",a = " << a << endl;
-        _ref = 7;  // _ref是对传入参数的引用，ref(_ref)将引用成员ref初始化为_ref
-    }
+    MyClass3(int& _ref);  // 构造函数也可以在类里面声明，外部实现
 
     void setVal(int a)
     {
@@ -98,6 +94,12 @@ public:
     }
 
 };
+
+MyClass3::MyClass3 (int& _ref) : id(9), ref(_ref), a(10)
+{
+    cout << "id = " << id << ",ref = " << ref << ",a = " << a << endl;
+    _ref = 7;  // _ref是对传入参数的引用，ref(_ref)将引用成员ref初始化为_ref
+}
 
 
 int main()
