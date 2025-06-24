@@ -82,7 +82,8 @@ class Mammals : public Animals
 // public继承，保持继承自父类的所有成员的访问权限不变，基类的private成员不可直接访问
 {
 private:
-    // 子类默认访问的是子类的同名成员
+    // 子类有同名成员，会将父类同名成员隐藏
+    // 默认访问的是子类的同名成员，通过作用域符可以访问父类同名成员
     int layer;  
 public:
     // 派生类不继承基类的构造函数（和赋值运算符）。派生类的构造函数必须负责初始化它的直接基类以及自己的成员。\
@@ -150,23 +151,41 @@ protected:
 };
 
 // 单继承：子类继承一个父类
-class Donkey : private Mammals
+// class Donkey : private Mammals
+class Donkey : virtual private Mammals // 使用虚继承规避菱形继承问题
 // private继承，基类的public和protected成员在派生类中都变成private（相当于派生类的私有成员，可以内部访问），基类的private成员不可直接访问
 {
 private:
 public:
+    string donkey_name = "驴";
+    void show_name() {
+        cout << donkey_name << endl;
+    }
 protected:
 };
 
 // 同一个父类可以派生多个子类
-class Horse : public Mammals
+// class Horse : public Mammals
+// 虚继承是 C++ 中解决菱形继承问题的核心技术，它通过共享基类实例避免数据冗余和访问冲突。\
+    在派生类声明时，使用 virtual 关键字修饰基类；派生类对象中会增加一个虚基类指针（VBPtr），指向虚基类表。\
+    虚继承会增加性能开销，仅在确实需要解决菱形继承问题时使用。过度使用虚继承会使代码难以理解和维护。
+class Horse : virtual public Mammals
 {
 private:
 public:
+    string horse_name = "马";
+    void show_name() {
+        cout << horse_name << endl;
+    }
 protected:
 };
 
-// 多继承：子类继承多个父类（注意：会导致菱形继承问题）
+// 多继承：\
+子类继承多个父类（注意：会导致菱形继承问题）
+// 菱形继承：\
+mule继承于horse和donkey，而horse和donkey都由mammals派生的，\
+mule有两份mammals的成员，分别来自horse和donkey，直接通过C的对象调用mammals类的成员时编译器会报错。\
+此时发生了菱形继承，造成了数据冗余和命名冲突问题，可以通过虚继承机制解决，私有继承无法解决这些问题。
 class Mule : public Donkey, public Horse
 {
 private:
@@ -187,15 +206,29 @@ int main(void)
     // show_layer是子类继承父类的函数，因此访问的layer也是父类的layer
     a_mammal.show_layer();
 
-    // 子类可以在外部访问父类public成员
+    // 子类可以在外部访问父类public成员(派生类对象可以当作基类对象使用)
     cout << "a_mammal.value1 = " << a_mammal.value1 << endl;
     a_mammal.value1 = 2;
     cout << "a_mammal.value1 = " << a_mammal.value1 << endl;
 
+    // 对象切片
+    Animals other_animal("一只动物");
+    Mammals other_mammal("一只哺乳动物");
+    Animals* p_animal;
+    Mammals* p_mammal;
+    // 可以将子类中基类的成员内容复制给基类对象
+    other_animal = other_mammal; // 可以赋值，因为other_mammal中拥有所有other_animal的成员
+    // other_mammal = other_animal; // 无法赋值，因为other_animal中没有other_mammal自己的成员
+    // 可以用基类指针指向子类对象的首地址，反之不行
+    p_animal = &other_mammal;
+    // p_mammal = &other_animal; // 不可行，因此子类指针读取的内存范围要比父类大
+
     // 子类如果有与父类同名的变量成员，直接访问优先访问子类的成员
-    cout << "a_mammal.value2 = " << a_mammal.value2 << endl;
+    cout << "a_mammal.value2 = " 
+    << a_mammal.value2 << endl;
     // 可以通过类名加作用域符指定访问父类的同名成员
-    cout << "a_mammal.Animals::value2 = " << a_mammal.Animals::value2 << endl;
+    cout << "a_mammal.Animals::value2 = " 
+    << a_mammal.Animals::value2 << endl;
 
     // 基类和派生类共享静态成员
     a_mammal.logfeature();
@@ -209,6 +242,15 @@ int main(void)
     // Human a_man(); // 会造成歧义，被编译器理解为无参函数
     Human a_man; // 创建对象调用无参构造，不需要圆括号
     a_man.logsomemember();
+
+    // 多继承
+    Mule a_mule;
+    // 同名成员可以通过作用域符指定访问
+    a_mule.Donkey::show_name();
+    a_mule.Horse::show_name();
+    cout << a_mule.horse_name << a_mule.donkey_name << endl;
+    // 发生菱形继承时也可以通过作用域符指定访问避免二义性问题，\
+    但是无法解决数据冗余问题，最佳解决方法还是虚继承，保证派生类中只存在一份基类成员
 
     return 0;
 }
