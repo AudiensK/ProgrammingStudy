@@ -195,8 +195,15 @@ protected:
 
 int main(void)
 {
+    // 静态创建对象（栈上分配）
     Animals a_animal("一只动物");
     Mammals a_mammal("一只哺乳动物");
+    // 以下写法是先创建一个临时对象 Human()（调用默认构造函数）。\
+    再通过拷贝构造函数将临时对象复制给 a_human（C++17 后可能被编译器优化为直接初始化，避免拷贝）。
+    Human a_human = Human(); // 避免这样的写法
+
+    // 动态创建对象（堆上分配）
+    Human* sec_human = new Human();
 
     a_animal.logsizeofclass();
     // 子类对象访问重写函数
@@ -211,11 +218,11 @@ int main(void)
     a_mammal.value1 = 2;
     cout << "a_mammal.value1 = " << a_mammal.value1 << endl;
 
-    // 对象切片
+    // 对象指针
     Animals other_animal("一只动物");
     Mammals other_mammal("一只哺乳动物");
-    Animals* p_animal;
-    Mammals* p_mammal;
+    Animals* p_animal; // 野指针，必须初始化，否则可能导致未定义行为
+    Mammals* p_mammal = nullptr; // 正确写法是初始化指向null，避免野指针
     // 可以将子类中基类的成员内容复制给基类对象
     other_animal = other_mammal; // 可以赋值，因为other_mammal中拥有所有other_animal的成员
     // other_mammal = other_animal; // 无法赋值，因为other_animal中没有other_mammal自己的成员
@@ -251,6 +258,8 @@ int main(void)
     cout << a_mule.horse_name << a_mule.donkey_name << endl;
     // 发生菱形继承时也可以通过作用域符指定访问避免二义性问题，\
     但是无法解决数据冗余问题，最佳解决方法还是虚继承，保证派生类中只存在一份基类成员
+
+    delete sec_human; sec_human = nullptr;
 
     return 0;
 }

@@ -37,6 +37,7 @@ class Sheep
     int age;
 public:
     char name[10];
+    std::string nickname;
 
     // 默认构造函数
     Sheep() : name("羊"), age(0) {}  
@@ -81,8 +82,10 @@ int main()
 {
     // 定义对象
     Sheep asheep;
-    // asheep.name = "Nill";  // 
-    strcpy(asheep.name, "小羊");
+    // asheep.name = "Nill";  // 字符数组不可以直接赋值
+    strcpy(asheep.name, "小羊"); // 使用strcpy赋值
+    asheep.nickname = "Nill"; // string可以直接赋值
+
     asheep.eat();
     // asheep.age = 1;  // 私有数据无法直接访问
     // 可通过公有的函数访问私有数据
@@ -93,7 +96,9 @@ int main()
     Sheep *another_sheep = new Sheep;
     strcpy(another_sheep->name, "大羊");
     another_sheep->eat();
-    delete another_sheep;
+    // 清理资源
+    delete another_sheep; // 清理内存
+    another_sheep = nullptr; // 释放后的指针指向null（避免野指针）
 
     return 0;
 }

@@ -19,7 +19,8 @@ int main()
     // 为单个对象分配内存
     int* ptr1 = new int;  // 分配一个int类型大小的内存空间
     *ptr1 = 0;
-    Person* p = new Person();  // 分配一个Person对象的内存空间，并调用默认构造函数
+    Person* p = new Person; // 分配一个Person对象的内存空间，并调用默认构造函数
+    Person* p1 = new Person();  // 可以在后面加括号，括号内无参数就是调用默认构造函数
     (*p).print();
     p->print();
 
