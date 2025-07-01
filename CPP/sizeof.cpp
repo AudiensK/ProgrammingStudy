@@ -17,7 +17,7 @@ int main()
     std::cout << "sizeof(double)=" << sizeof(double) << " Byte" << std::endl;
     std::cout << "sizeof(long double)=" << sizeof(long double) << " Byte" << std::endl;
 
-    std::cout << "sizeof(void)=" << sizeof(void) << " Byte" << std::endl;
+    // std::cout << "sizeof(void)=" << sizeof(void) << " Byte" << std::endl;
 
     std::cin.get();
     return 0;

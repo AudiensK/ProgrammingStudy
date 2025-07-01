@@ -8,6 +8,9 @@ class Shape
 {
 public:
     virtual double area() = 0;
+
+    // virtual double area() final = 0;
+    // 如果给纯虚函数标记final，就无法在子类被重写，因此子类继承纯虚函数，成为抽象类
 };
 
 class Circle : public Shape
