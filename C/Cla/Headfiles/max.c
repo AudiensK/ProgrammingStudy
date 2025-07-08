@@ -1,4 +1,4 @@
-#include "max.h"
+#include <stdbool.h>
 
 int gAll = 11;  // 可以通过在头文件中声明来让其他文件使用这个文件的全局变量
 

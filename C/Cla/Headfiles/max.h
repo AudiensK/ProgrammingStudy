@@ -21,7 +21,7 @@
 #ifndef _MAX_H_
 #define _MAX_H_
 
-#include <stdbool.h>  // 仅在头文件中包含必要的头文件
+// #include <stdbool.h>  // 仅在头文件中包含必要的头文件
 
 extern int gAll;  // 在头文件中声明外部全局变量以供其他文件使用过
 // extern主要用于声明外部（external）变量或函数，告诉编译器该符号（变量 / 函数）的定义在别处（可能在其他源文件或当前文件的后面部分）。
