@@ -11,10 +11,25 @@ int main()
     // swap_var<double>(a, b); // 报错，指定T的类型与传入参数不符
     cout << "a = " <<a << ", b = " << b << endl;
 
-    double c = 1.2;
+    double c = 1.2;  
     // 如果模板参数列表只有一个参数，在函数中传入不同类型的参数，编译器就无法确定参数的类型
-    // swap_var(a, c);
+    // a = add_num(3, 3.14);
 
+    // 如果传入参数不是引用参数，可以手动指定参数类型然后强制转换类型
+    cout << add_num<int>(3, 3.14) << endl;
+    cout << add_num<double>(3, 3.14) << endl;
+    cout << add_num<int>(a, c) << endl;
+
+    // swap_var<int>(a, c); // 无法手动指定参数类型并强制转换，因为传入的是引用变量
+    cout << "a = " <<a << ", c = " << c << endl;
+
+    // 重载
+    swap_var(a, c); // 隐式实例化
+    cout << "a = " <<a << ", c = " << c << endl;
+    swap_var<int, double>(a, c); // 显式实例化
+    cout << "a = " <<a << ", c = " << c << endl;
+
+    // 命名空间
     cout << MyFunc::max(3.3, 2) << endl; // T 被推导为 double, S 被推导为 int
     cout << MyFunc::max(1, 3.2) << endl; // T 被推导为 int, S 被推导为 doubl
 
@@ -25,6 +40,15 @@ int main()
     // 常量对象
     const MyVector<int> cv(3);
     int value = cv[0]; // 错误：若没有const版本的operator[]，此行无法编译
+
+    // 模板函数重载了普通函数，优先调用普通函数
+    cout << add_num(2.2, 2.3) << endl;
+    // 可以显示指定调用模板函数
+    cout << add_num<>(2.2, 2.3) << endl;
+    cout << add_num<>(a, b) << endl;
+
+    // 非类型参数使用示例
+    MyArray<int, 5> arr;  // 创建包含5个int的数组
 
     return 0;
 }

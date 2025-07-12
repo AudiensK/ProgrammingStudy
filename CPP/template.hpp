@@ -35,6 +35,27 @@ void swap_var(T &a, T &b) // 模板函数
     b = temp;
 }
 
+// 模板函数可以重载
+template <typename T1, typename T2>
+void swap_var(T1 &a, T2 &b)
+{
+    T1 temp = a;
+    a = b;
+    b = temp;
+}
+
+template <typename T> 
+T add_num(T a, T b)
+{
+    return a + b;
+}
+
+// 如果模板函数重载了普通函数，调用时会优先调用普通函数
+int add_num(double a, double b)
+{
+    return a + b;
+} 
+
 namespace MyFunc {
     // C++ 标准库已经提供了 std::max 函数模板。\
     如果你的代码中包含 <algorithm> 头文件，直接定义 max 会导致命名冲突。\
@@ -69,5 +90,28 @@ public:
 // 类模板实例化时必须显式指定类型（如 Vector<int>）。函数模板可以隐式实例化。
 // 模板本身不是代码，而是代码生成器。编译器在看到模板定义时不会立即生成代码，\
 而是在实例化（如 Vector<int>）时才根据具体类型生成对应的代码。
+
+// 模板参数可以是：\
+类型参数（如 typename T）\
+非类型参数（如整数、指针、引用）\
+模板模板参数(允许将模板作为另一个模板的参数。)
+template <typename T, size_t N>
+class MyArray {
+private:
+    T data[N];
+public:
+    size_t size() const { return N; }
+};
+
+// 模板特化：当模板对特定类型需要不同的实现时，可以使用模板特化。
+template <typename T, size_t N>
+class MyArray<T*, N> { // // 指针类型的特化
+private:
+    T* data = new T[N];
+public:
+    ~MyArray() { delete[] data; }
+    
+    size_t size() const { return N; }
+};
 
 #endif
