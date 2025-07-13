@@ -50,5 +50,21 @@ int main()
     // 非类型参数使用示例
     MyArray<int, 5> arr;  // 创建包含5个int的数组
 
+    // 模板特化使用示例
+    // 函数模板特化
+    char str1[] = "123", str2[] = "345";
+    cout << "str1 + str2 = " << add_num(str1, str2) << endl;
+    cout << "&a + &b = " << (int)add_num(&a, &b) << endl;
+
+    // 类模板特化
+    Container<int, double> container1;
+    container1.print();
+    Container<char*, int> container2;
+    container2.print();
+    Container<char*, double> container3;
+    container3.print();
+    Container<char*, char*> container4;
+    container4.print();
+
     return 0;
 }

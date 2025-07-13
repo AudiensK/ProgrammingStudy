@@ -35,27 +35,6 @@ void swap_var(T &a, T &b) // 模板函数
     b = temp;
 }
 
-// 模板函数可以重载
-template <typename T1, typename T2>
-void swap_var(T1 &a, T2 &b)
-{
-    T1 temp = a;
-    a = b;
-    b = temp;
-}
-
-template <typename T> 
-T add_num(T a, T b)
-{
-    return a + b;
-}
-
-// 如果模板函数重载了普通函数，调用时会优先调用普通函数
-int add_num(double a, double b)
-{
-    return a + b;
-} 
-
 namespace MyFunc {
     // C++ 标准库已经提供了 std::max 函数模板。\
     如果你的代码中包含 <algorithm> 头文件，直接定义 max 会导致命名冲突。\
@@ -67,6 +46,63 @@ namespace MyFunc {
     {
         return (a > b) ? a : b;
     }
+}
+
+// 类模板的成员函数通常在类内声明、类外定义（尤其是长函数体），且定义时需重复模板声明。
+// 类模板实例化时必须显式指定类型（如 Vector<int>）。函数模板可以隐式实例化。
+// 模板本身不是代码，而是代码生成器。编译器在看到模板定义时不会立即生成代码，\
+而是在实例化（如 Vector<int>）时才根据具体类型生成对应的代码。
+
+// 模板参数可以是：\
+类型参数（如 typename T）\
+非类型参数（如整数、指针、引用）\
+模板模板参数(允许将模板作为另一个模板的参数。)
+template <typename T, size_t N>
+class MyArray {
+private:
+    T data[N];
+public:
+    size_t size() const { return N; }
+};
+
+// 模板函数可以重载
+template <typename T1, typename T2>
+void swap_var(T1 &a, T2 &b)
+{
+    T1 temp = a;
+    a = b;
+    b = temp;
+}
+
+// 如果模板函数重载了普通函数，调用时会优先调用普通函数
+int add_num(double a, double b)
+{
+    return a + b;
+} 
+
+// 模板1
+template <typename T> 
+T add_num(T a, T b)
+{
+    return a + b;
+}
+
+// 模板2（重载）
+template <typename T> 
+char add_num(T* a, T* b)
+{
+    return (char)(*a + *b);
+}
+
+// 模板特化：当模板对特定类型需要不同的实现时，可以使用模板特化。\
+当编译器遇到特化类型的实例化时，会优先使用特化版本而非主模板。\
+特化不是重载！！
+// 函数模板特化
+template <>
+char add_num<char>(char* a, char* b) // <char>相当于T=char
+// 传入参数为char*，调用重载函数模板char add_num(T* a, T* b)，特化模板返回值要与主模板一致
+{
+    return (char)((int)*a + (int)*b);
 }
 
 // 类模板允许你定义一个通用类，它的成员变量和成员函数可以使用泛型类型。
@@ -86,32 +122,45 @@ public:
     // 当对象被声明为const时，编译器要求只能调用其常量成员函数（即被const修饰的成员函数）。
     const T& operator[](size_t i) const { return data[i]; } // const函数，返回const T&
 };
-// 类模板的成员函数通常在类内声明、类外定义（尤其是长函数体），且定义时需重复模板声明。
-// 类模板实例化时必须显式指定类型（如 Vector<int>）。函数模板可以隐式实例化。
-// 模板本身不是代码，而是代码生成器。编译器在看到模板定义时不会立即生成代码，\
-而是在实例化（如 Vector<int>）时才根据具体类型生成对应的代码。
 
-// 模板参数可以是：\
-类型参数（如 typename T）\
-非类型参数（如整数、指针、引用）\
-模板模板参数(允许将模板作为另一个模板的参数。)
-template <typename T, size_t N>
-class MyArray {
-private:
-    T data[N];
+// 类模板特化
+// 主模板
+template <typename T, typename U>
+class Container {
 public:
-    size_t size() const { return N; }
+    void print() { std::cout << "主模板" << std::endl; }
 };
 
-// 模板特化：当模板对特定类型需要不同的实现时，可以使用模板特化。
-template <typename T, size_t N>
-class MyArray<T*, N> { // // 指针类型的特化
-private:
-    T* data = new T[N];
+// 全特化：针对char*, int类型
+template <>
+class Container<char*, int> {
 public:
-    ~MyArray() { delete[] data; }
-    
-    size_t size() const { return N; }
+    void print() { std::cout << "全特化" << std::endl; }
 };
+
+// 类模板偏特化（部分特化）：T为指针类型，U不变（函数模板没有部分特化）
+template <typename T, typename U>
+class Container<T*, U> {
+public:
+    void print() { std::cout << "偏特化" << std::endl; };
+};
+
+// 类成员特化
+template<>
+void Container<char*, char*>::print() { std::cout << "类成员特化" << std::endl; }
+
+/* 模板特化的注意事项
+1.特化必须在主模板之后声明
+2.特化不是重载
+    特化不会改变函数签名
+    特化必须匹配主模板的签名
+3.特化的作用域
+    特化必须在首次使用该特化的翻译单元中声明
+    通常将特化放在头文件中
+4.避免过度特化：过多特化会降低代码的可维护性。
+*/
+
+// 模板模板参数（Template Template Parameters）\
+允许将模板作为另一个模板的参数
 
 #endif
