@@ -160,7 +160,56 @@ void Container<char*, char*>::print() { std::cout << "类成员特化" << std::e
 4.避免过度特化：过多特化会降低代码的可维护性。
 */
 
-// 模板模板参数（Template Template Parameters）\
-允许将模板作为另一个模板的参数
+// 可变参数模板（Variadic Templates） 是一项强大的特性，\
+允许模板接受任意数量、任意类型的参数。这一特性在 C++11 中引入，常用于实现泛型算法、元编程和容器类。
+//可变参数模板允许模板接受可变数量的参数，这些参数被称为参数包（Parameter Pack）。分为：模板参数包 和 函数参数包。
+template <typename... Args> // 模板参数包：Args...
+void print_all(Args... args)  // 函数参数包：args...
+{
+    // 初始化列表展开参数包（C++11 起）
+    (void)std::initializer_list<int>{
+        (std::cout << args << ' ', 0)...  // 展开每个参数
+    };
+}
+
+// 递归展开参数包（C++11/14 风格）
+void recur_print() { // 终止函数（当参数包为空时调用）
+    std::cout << std::endl;
+}
+
+template <typename T, typename... Args> // 递归函数（处理至少一个参数）
+void recur_print(T first, Args... args) {
+    std::cout << first;
+    if constexpr (sizeof...(args) > 0) {
+        std::cout << ", ";
+    }
+    recur_print(args...);  // 递归展开剩余参数
+}
+
+// 折叠表达式展开（C++17 起）
+template <typename... Args>
+auto fold_sum(Args... args) {
+    return (args + ...);  // 一元右折叠：(args1 + (args2 + (args3 + ...)))
+}
+
+template <typename... Args>
+void fold_print(Args... args) {
+    ((std::cout << args << ' '), ...);  // 逗号表达式折叠
+}
+
+// 模板模板参数（Template Template Parameters），允许将模板作为另一个模板的参数，\
+这在定义泛型容器或适配器时特别有用，因为它允许你指定容器的类型（如 std::vector 或 std::list）而不固定其元素类型。
+template <
+    typename T, 
+    template <typename...Args> class Container // 模板模板参数
+>
+class ContainerAdapter {
+private:
+    Container<T> data; // 使用传入的容器模板，元素类型T
+public:
+    void add(int value) {
+        data.push_back(value);
+    }
+};
 
 #endif

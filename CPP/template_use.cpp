@@ -66,5 +66,11 @@ int main()
     Container<char*, char*> container4;
     container4.print();
 
+    // 可变参数模板调用
+    print_all(1, "print_all", 3.14);
+    cout << endl;
+    recur_print(1, 2.5, "recur_print");
+    fold_print(1, 2.5, "fold_print", fold_sum(1, 1.34, -1, 2.0f));
+
     return 0;
 }
