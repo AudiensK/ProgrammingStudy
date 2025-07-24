@@ -1,13 +1,17 @@
 # Windows
 *.exe
 
-#VSCode
+# VSCode
 .vscode
 
-#VS
+# VS
 .vs
 
-#Clang
+# Clang
 *.i
 *.s
 *.o
+
+# Projects
+Libraries
+Projects
