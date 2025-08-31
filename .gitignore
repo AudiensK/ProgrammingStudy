@@ -12,6 +12,12 @@
 *.s
 *.o
 
+# CS
+CS/*/bin
+CS/*/obj
+*.sln
+*.csproj
+
 # Projects
 Libraries
 Projects
