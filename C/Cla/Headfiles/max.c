@@ -35,8 +35,8 @@ double max(int a, int b)
 bool if_abtb(int a, int b)
 {
     if (a > b) {
-        return true;
+        return 1;
     } else {
-        return false;
+        return 0;
     }
 }
